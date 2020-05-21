@@ -2,6 +2,7 @@ package com.example.server.Controller;
 
 import com.example.server.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +17,7 @@ public class TestController {
 
     public static AtomicInteger ato=new AtomicInteger(0);
 
-    @PostMapping("/thread")
+   /* @PostMapping("/thread")
     public String create(Integer s){
 
         ato.incrementAndGet();
@@ -30,5 +31,22 @@ public class TestController {
         }else{
             return "被控制";
         }
+    }*/
+    @PostMapping("/thread")
+    public String test(String a) throws InterruptedException {
+        int i = ato.get();
+        if(i == 5){
+            synchronized (this){
+                ato.set(0);
+                notifyAll();
+                return a;
+            }
+
+        }
+        ato.incrementAndGet();
+        synchronized (this){
+            wait();
+        }
+        return a;
     }
 }
