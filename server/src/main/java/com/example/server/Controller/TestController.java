@@ -39,7 +39,12 @@ public class TestController {
             synchronized (this){
                 ato.set(0);
                 notifyAll();
-                return a;
+                String model = testService.Producer();
+                System.out.println(model);
+                String consumer = testService.Consumer();
+                System.out.println(consumer);
+                return consumer;
+
             }
 
         }
