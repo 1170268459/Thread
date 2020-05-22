@@ -3,6 +3,7 @@ package com.example.server.threadapi;
 import com.example.server.model.Feedback;
 import org.springframework.stereotype.Component;
 
+import java.beans.PropertyDescriptor;
 import java.util.Date;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -15,15 +16,15 @@ public class ProducerAndConsumer {
     private static final Integer FULL = 10;
     private static String LOCK = "lock";
 
-    public String ThreadTest(){
-       Producer producer=new Producer();
-        producer.run();
+    public String ThreadTest() {
+        ProducerAndConsumer producerAndConsumer = new ProducerAndConsumer();
+        new Thread(producerAndConsumer.new Producer()).start();
         return "生产者开始生产";
     }
 
-    public String  ConsumerTest(){
-        Consumer consumer=new Consumer();
-        consumer.run();
+    public String ConsumerTest() {
+        ProducerAndConsumer producerAndConsumer = new ProducerAndConsumer();
+        new Thread(producerAndConsumer.new Consumer()).start();
         return "消费者开始消费";
     }
 
@@ -32,10 +33,7 @@ public class ProducerAndConsumer {
         @Override
         public void run() {
             for (int i = 0; i < 5; i++) {
-                Feedback feedback=new Feedback();
-                feedback.setTec_ts(new Date());
-                feedback.setTs_diff(new Date());
-                feedback.setTs_diff(new Date());
+
 
 
 
