@@ -19,20 +19,19 @@ public class ThreadService {
 
     public String ProducerFuter(){
         ProducerFuture producer=new ProducerFuture(queue);
-        System.out.println("开始生产");
         service.submit(producer);
         return "生产生产";
 
     }
 
-    public Feedback ConsumerFuture( int ato) throws ExecutionException, InterruptedException {
+    public Feedback ConsumerFuture(int ato) throws ExecutionException, InterruptedException {
         Consumer consumer=new Consumer(queue);
         Future<Feedback> submit = service.submit(consumer);
         Feedback feedback = submit.get();
         System.out.println("开始消费");
-        if (ato==5){
-            service.shutdown();
-        }
+
+          /*  service.shutdown();*/
+
         return feedback;
 
     }

@@ -45,14 +45,14 @@ public class TestController {
     @ResponseBody
     public Feedback test(String a) throws InterruptedException, ExecutionException {
         System.out.println("进去");
-        Feedback feedback = null;
         int i = ato.get();
-        feedback = threadService.ConsumerFuture(i);
+        Feedback feedback =  threadService.ConsumerFuture(ato.get());
+        System.out.println("================");
         if(i == 5){
             synchronized (this){
                 ato.set(0);
                 notifyAll();
-
+                System.out.println("========iiii========");
                 return feedback;
             }
         }
@@ -60,7 +60,7 @@ public class TestController {
         synchronized (this){
             wait();
         }
-
+        System.out.println("========iiii========");
         return feedback;
 
     }
